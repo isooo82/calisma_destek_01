@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Welcome to your tasks dashboard!',
+              'Görevlerin olduğu alana hoşgeldin',
               style: TextStyle(fontSize: 24.0),
             ),
             SizedBox(height: 16.0),
