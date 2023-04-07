@@ -1,56 +1,99 @@
 import 'package:flutter/material.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:calisma_destek_01/screens/register_screen.dart';
 
-class HomeScreen extends StatefulWidget {
+void main() => runApp(MaterialApp(home: HomePage()));
+
+class HomePage extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 0;
+class _HomePageState extends State<HomePage> {
+  int _page = 0;
+
+  GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
+
+  Widget _buildPage(int page) {
+    switch (page) {
+      case 0:
+        return FirstPage();
+      case 1:
+        return SecondPage();
+      case 2:
+        return ThirdPage();
+      case 3:
+        return ThirdPage();
+      case 4:
+        return ThirdPage();
+    // Diğer sayfalar...
+      default:
+        return Container();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Görevlerin olduğu alana hoşgeldin',
-              style: TextStyle(fontSize: 24.0),
-            ),
-            SizedBox(height: 16.0),
-            Text(
-              'You can track your monthly tasks, total tasks, and events here.',
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
+      bottomNavigationBar: CurvedNavigationBar(
+        key: _bottomNavigationKey,
+        index: 0,
+        height: 60.0,
+        items: <Widget>[
+          Icon(Icons.add, size: 30),
+          Icon(Icons.list, size: 30),
+          Icon(Icons.compare_arrows, size: 30),
+          Icon(Icons.call_split, size: 30),
+          Icon(Icons.perm_identity, size: 30),
+        ],
+        color: Colors.white,
+        buttonBackgroundColor: Colors.white,
+        backgroundColor: Colors.blueAccent,
+        animationCurve: Curves.easeInOut,
+        animationDuration: Duration(milliseconds: 400),
         onTap: (index) {
           setState(() {
-            _currentIndex = index;
+            _page = index;
           });
         },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            label: 'Monthly Tasks',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.assignment_turned_in),
-            label: 'Total Tasks',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.event),
-            label: 'Events',
-          ),
-        ],
+        letIndexChange: (index) => true,
+      ),
+      body: _buildPage(_page),
+    );
+  }
+}
+
+class FirstPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.redAccent,
+      child: Center(
+        child: Text('First Page'),
+      ),
+    );
+  }
+}
+
+class SecondPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.greenAccent,
+      child: Center(
+        child: Text('Second Page'),
+      ),
+    );
+  }
+}
+
+class ThirdPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.yellowAccent,
+      child: Center(
+        child: Text('Third Page'),
       ),
     );
   }
